@@ -6,6 +6,8 @@ import jwzp.cinema_city.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovieService {
     @Autowired
@@ -13,5 +15,10 @@ public class MovieService {
 
     public Movie registerMovie(Movie movie) {
         return MovieRepository.save(movie);
+    }
+
+    public List<Movie> findAllMovies() {
+        List<Movie> movies = MovieRepository.findAll();
+        return movies;
     }
 }

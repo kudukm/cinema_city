@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class MovieController {
     @Autowired
@@ -22,5 +24,12 @@ public class MovieController {
     public String registerMovie(@ModelAttribute Movie movie) {
         MovieService.registerMovie(movie);
         return "redirect:/addMovie?success";
+    }
+
+    @GetMapping("/movies-list")
+    public String listMovies(Model model) {
+        List<Movie> movies = MovieService.findAllMovies();
+        model.addAttribute("movies", movies);
+        return "movies-list";
     }
 }
