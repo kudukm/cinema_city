@@ -54,5 +54,9 @@ public class Screening {
     public Boolean[] getSeats() {
         return seats;
     }
+
+    public void setSeats(Boolean[] seats) {
+        this.seats = seats;
+    }
 }
 

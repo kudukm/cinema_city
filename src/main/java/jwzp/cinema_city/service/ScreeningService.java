@@ -1,6 +1,7 @@
 package jwzp.cinema_city.service;
 
 
+import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.repository.ScreeningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,21 @@ public class ScreeningService {
     public Screening findScreeningById(String id) {
         Optional<Screening> optionalScreening = screeningRepository.findById(id);
         return optionalScreening.orElse(null);
+    }
+
+    public void updateSeatsForReservation(Reservation reservation) {
+        Optional<Screening> screeningOptional = screeningRepository.findById(reservation.getScreeningId().getId());
+        if (screeningOptional.isPresent()) {
+            Screening screening = screeningOptional.get();
+            Boolean[] seats = screening.getSeats();
+            for (int seat : reservation.getSeats()) {
+                seats[seat] = true;
+            }
+            screening.setSeats(seats);
+            screeningRepository.save(screening);
+        } else {
+            // Handle case where screening is not found (optional)
+            throw new IllegalArgumentException("Screening not found for ID: " + reservation.getScreeningId());
+        }
     }
 }

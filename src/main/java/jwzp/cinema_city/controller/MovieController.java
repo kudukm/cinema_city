@@ -110,6 +110,7 @@ public class MovieController {
         reservation.setSeats(selectedSeats.stream().mapToInt(i->i).toArray());
 
         reservationService.saveReservation(reservation);
+        screeningService.updateSeatsForReservation(reservation);
 
         return "reservation-success"; // Add a confirmation page or message
     }
