@@ -1,9 +1,13 @@
 package jwzp.cinema_city.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jwzp.cinema_city.models.Movie;
+import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.service.MovieService;
+import jwzp.cinema_city.service.ReservationService;
 import jwzp.cinema_city.service.ScreeningService;
+import jwzp.cinema_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,7 +24,13 @@ public class MovieController {
     private MovieService movieService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ScreeningService screeningService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping("/addMovie")
     public String showRegistrationForm(Model model) {
@@ -72,5 +82,39 @@ public class MovieController {
         Screening screening = screeningService.findScreeningById(id);
         model.addAttribute("screening", screening);
         return "reserve";
+    }
+
+    @PostMapping("/reserve")
+    public String reserveSeats(@RequestParam String screeningId, @RequestParam String movieTitle,
+                               @RequestParam String screeningTime, @RequestParam List<Integer> seats, Model model, HttpSession session) {
+        session.setAttribute("screeningId", screeningId);
+        session.setAttribute("movieTitle", movieTitle);
+        session.setAttribute("screeningTime", screeningTime);
+        session.setAttribute("selectedSeats", seats);
+        return "payment";
+    }
+
+    @PostMapping("/confirmReservation")
+    public String confirmReservation(@RequestParam String userId, HttpSession session) {
+        Screening screening = screeningService.findScreeningById((String) session.getAttribute("screeningId"));
+        List<Integer> selectedSeats = (List<Integer>) session.getAttribute("selectedSeats");
+
+        if (selectedSeats == null || selectedSeats.isEmpty()) {
+            return "redirect:/payment?error=noSeatsSelected";
+        }
+
+        Reservation reservation = new Reservation();
+        //reservation.setUserId(userId); TODD: when payment has user id this is good remove next line
+        reservation.setUser(userService.getUser());
+        reservation.setScreening(screening);
+        reservation.setSeats(selectedSeats.stream().mapToInt(i->i).toArray());
+
+        reservationService.saveReservation(reservation);
+
+        return "reservation-success"; // Add a confirmation page or message
+    }
+
+    private int mapStringToInt (String s){
+        return Integer.parseInt(s);
     }
 }
