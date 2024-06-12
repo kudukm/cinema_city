@@ -13,8 +13,8 @@
     <form th:action="@{/addScreening}" th:object="${screening}" method="post">
         <div class="form-group">
             <label for="movie">Movie</label>
-            <select class="form-control" id="movie" name="movie" th:field="*{movie}">
-                <option th:each="movie : ${movies}" th:value="${movie}" th:text="${movie.title}">Movie</option>
+            <select class="form-control" id="movie" name="movieId" th:field="*{movie.id}">
+                <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">Movie</option>
             </select>
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
         $(document).ready(function() {
             $('#movie').select2({
                 placeholder: 'Select a movie',
-                allowClear: true
+                allowClear: false
             });
         });
     </script>

@@ -11,13 +11,17 @@ import java.util.List;
 @Service
 public class MovieService {
     @Autowired
-    private MovieRepository MovieRepository;
+    private MovieRepository movieRepository;
 
     public Movie registerMovie(Movie movie) {
-        return MovieRepository.save(movie);
+        return movieRepository.save(movie);
     }
 
     public List<Movie> findAllMovies() {
-        return MovieRepository.findAll();
+        return movieRepository.findAll();
+    }
+
+    public Movie findMovieById(String id) {
+        return movieRepository.findById(id).orElse(null);
     }
 }

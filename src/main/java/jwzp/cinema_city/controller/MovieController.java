@@ -5,10 +5,13 @@ import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.service.MovieService;
 import jwzp.cinema_city.service.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -48,7 +51,19 @@ public class MovieController {
 
     @PostMapping("/addScreening")
     public String addScreening(@ModelAttribute Screening screening) {
-        screeningService.registerScreening(screening);
+        screening.setScreeningTime(LocalDateTime.now().plusDays(1)); // Set the screening time for example
+        screeningService.addScreening(screening);
         return "redirect:/addScreening";
+    }
+
+    @GetMapping("/screenings")
+    public String showScreeningsByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
+        if (date == null) {
+            date = LocalDate.now(); // Default to current date if no date is provided
+        }
+        List<Screening> screenings = screeningService.findScreeningsByDate(date);
+        model.addAttribute("screenings", screenings);
+        model.addAttribute("selectedDate", date);
+        return "screenings";
     }
 }
