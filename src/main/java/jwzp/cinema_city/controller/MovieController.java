@@ -57,9 +57,9 @@ public class MovieController {
     }
 
     @GetMapping("/screenings")
-    public String showScreeningsByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
+    public String showScreeningsByDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         if (date == null) {
-            date = LocalDate.now(); // Default to current date if no date is provided
+            date = LocalDate.now();
         }
         List<Screening> screenings = screeningService.findScreeningsByDate(date);
         model.addAttribute("screenings", screenings);
