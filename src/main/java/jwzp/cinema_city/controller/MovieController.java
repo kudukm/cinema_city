@@ -66,4 +66,11 @@ public class MovieController {
         model.addAttribute("selectedDate", date);
         return "screenings";
     }
+
+    @GetMapping("/reserve/{id}")
+    public String showReservePage(@PathVariable("id") String id, Model model) {
+        Screening screening = screeningService.findScreeningById(id);
+        model.addAttribute("screening", screening);
+        return "reserve";
+    }
 }

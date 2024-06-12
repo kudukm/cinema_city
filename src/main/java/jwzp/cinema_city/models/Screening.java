@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Document(collection = "screenings")
 public class Screening {
@@ -15,11 +16,11 @@ public class Screening {
 
     private LocalDateTime screeningTime;
 
-    public Screening() {}
+    private Boolean[] seats = new Boolean[40]; // Initialize with default values (null)
 
-    public Screening(Movie movie, LocalDateTime screeningTime) {
-        this.movie = movie;
-        this.screeningTime = screeningTime;
+    public Screening() {
+        // Initialize seats with all false (unreserved)
+        Arrays.fill(seats, false);
     }
 
     public String getId() {
@@ -44,6 +45,14 @@ public class Screening {
 
     public void setScreeningTime(LocalDateTime screeningTime) {
         this.screeningTime = screeningTime;
+    }
+
+    public void reserveSeat(int i){this.seats[i] = true;}
+
+    public void emptySeat(int i){this.seats[i] = false;}
+
+    public Boolean[] getSeats() {
+        return seats;
     }
 }
 

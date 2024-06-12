@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ScreeningService {
@@ -23,5 +24,10 @@ public class ScreeningService {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         return screeningRepository.findByScreeningTimeBetween(startOfDay, endOfDay);
+    }
+
+    public Screening findScreeningById(String id) {
+        Optional<Screening> optionalScreening = screeningRepository.findById(id);
+        return optionalScreening.orElse(null);
     }
 }

@@ -32,6 +32,9 @@
       <tr th:each="screening : ${screenings}">
         <td th:text="${screening.movie.title}">Movie Title</td>
         <td th:text="${screening.screeningTime}">Screening Time</td>
+        <td>
+          <a th:href="@{/reserve/{id}(id=${screening.id})}" class="btn btn-primary">Reserve</a>
+        </td>
       </tr>
       </tbody>
     </table>
