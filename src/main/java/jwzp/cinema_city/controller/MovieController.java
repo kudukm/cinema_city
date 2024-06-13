@@ -63,7 +63,7 @@ public class MovieController {
     public String addScreening(@ModelAttribute Screening screening) {
         screening.setScreeningTime(LocalDateTime.now().plusDays(1)); // Set the screening time for example
         screeningService.addScreening(screening);
-        return "redirect:/addScreening";
+        return "addScreening";
     }
 
     @GetMapping("/screenings")
@@ -104,8 +104,7 @@ public class MovieController {
         }
 
         Reservation reservation = new Reservation();
-        //reservation.setUserId(userId); TODD: when payment has user id this is good remove next line
-        reservation.setUser(userService.getUser());
+        reservation.setUser(userService.getUserByID(userId));
         reservation.setScreening(screening);
         reservation.setSeats(selectedSeats.stream().mapToInt(i->i).toArray());
 
@@ -115,7 +114,4 @@ public class MovieController {
         return "reservation-success"; // Add a confirmation page or message
     }
 
-    private int mapStringToInt (String s){
-        return Integer.parseInt(s);
-    }
 }

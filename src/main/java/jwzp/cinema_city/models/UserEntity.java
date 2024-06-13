@@ -11,7 +11,8 @@ public class UserEntity {
     private String password;
     private String email;
 
-    // Getters and Setters
+    private String role = "USER";
+
     public String getId() {
         return id;
     }
@@ -42,5 +43,13 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

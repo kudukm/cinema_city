@@ -14,7 +14,7 @@ public class UtilityController {
         return "home";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/panel")
     public String admin(){
         return "admin";
     }
