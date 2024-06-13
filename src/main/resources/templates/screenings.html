@@ -18,7 +18,7 @@
     <button type="submit" class="btn btn-primary">Show Screenings</button>
   </form>
   <div th:if="${screenings.empty}">
-    <p>Przepraszamy, kino w tym dniu nie czynne</p>
+    <p>Sorry, the cinema is closed on this day</p>
   </div>
   <div th:if="${!screenings.empty}">
     <table class="table">
