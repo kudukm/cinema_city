@@ -33,7 +33,7 @@ public class Reservation {
         this.user = user;
     }
 
-    public Screening getScreeningId() {
+    public Screening getScreening() {
         return screening;
     }
 

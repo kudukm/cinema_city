@@ -28,7 +28,8 @@ public class securityConfiguration {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/", "/register","/screenings").permitAll();
                     registry.requestMatchers("/addMovie","/addScreening","/panel").hasRole("ADMIN");
-                    registry.requestMatchers("/movies-list","/reserve/**","/confirmReservation").hasRole("USER");
+                    registry.requestMatchers("/movies-list","/reserve/**","/confirmReservation",
+                            "/userPastReservations","/userFutureReservations").hasRole("USER");
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)

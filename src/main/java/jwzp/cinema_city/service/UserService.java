@@ -1,7 +1,9 @@
 package jwzp.cinema_city.service;
 
 
+import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.UserEntity;
+import jwzp.cinema_city.repository.ReservationRepository;
 import jwzp.cinema_city.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -11,13 +13,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     public UserEntity registerUser(UserEntity user) {
         return userRepository.save(user);
@@ -46,5 +53,23 @@ public class UserService implements UserDetailsService {
     }
     public UserEntity getUserByID(String id){
         return userRepository.findById(id).orElse(null);
+    }
+
+    public List<Reservation> getPastReservations(UserEntity user, LocalDateTime currentTime) {
+        List<Reservation> reservations = reservationRepository.findByUser(user);
+        return reservations.stream()
+                .filter(reservation -> reservation.getScreening().getScreeningTime().isBefore(currentTime))
+                .collect(Collectors.toList());
+    }
+
+    public List<Reservation> getFutureReservations(UserEntity user, LocalDateTime currentTime) {
+        List<Reservation> reservations = reservationRepository.findByUser(user);
+        return reservations.stream()
+                .filter(reservation -> reservation.getScreening().getScreeningTime().isAfter(currentTime))
+                .collect(Collectors.toList());
+    }
+
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

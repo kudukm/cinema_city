@@ -33,7 +33,7 @@ public class ScreeningService {
     }
 
     public void updateSeatsForReservation(Reservation reservation) {
-        Optional<Screening> screeningOptional = screeningRepository.findById(reservation.getScreeningId().getId());
+        Optional<Screening> screeningOptional = screeningRepository.findById(reservation.getScreening().getId());
         if (screeningOptional.isPresent()) {
             Screening screening = screeningOptional.get();
             Boolean[] seats = screening.getSeats();
@@ -44,7 +44,7 @@ public class ScreeningService {
             screeningRepository.save(screening);
         } else {
             // Handle case where screening is not found (optional)
-            throw new IllegalArgumentException("Screening not found for ID: " + reservation.getScreeningId());
+            throw new IllegalArgumentException("Screening not found for ID: " + reservation.getScreening());
         }
     }
 }
