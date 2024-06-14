@@ -4,7 +4,6 @@ import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.UserEntity;
 import jwzp.cinema_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -65,6 +64,11 @@ public class UserController {
         List<Reservation> reservations = userService.getFutureReservations(user,time);
         model.addAttribute("reservations", reservations);
         return "userFutureReservations";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        return "customLogin";
     }
 
 }

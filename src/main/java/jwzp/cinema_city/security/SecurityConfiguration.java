@@ -25,6 +25,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll())
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/", "/register","/screenings").permitAll();
                     registry.requestMatchers("/addMovie","/addScreening","/panel").hasRole("ADMIN");
