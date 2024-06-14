@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -66,9 +64,9 @@ public class UserController {
         return "userFutureReservations";
     }
 
-    @GetMapping("/login")
+    /*@GetMapping("/login")
     public String loginPage(Model model) {
         return "customLogin";
-    }
+    }*/
 
 }

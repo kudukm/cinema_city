@@ -25,11 +25,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(form -> form
+                /*.formLogin(form -> form
                         .loginPage("/login")
-                        .permitAll())
+                        .permitAll())*/
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/", "/register","/screenings").permitAll();
+                    registry.requestMatchers("/", "/home", "/register","/screenings", "/css/style.css", "/js/scripts.js").permitAll();
                     registry.requestMatchers("/addMovie","/addScreening","/panel").hasRole("ADMIN");
                     registry.requestMatchers("/movies-list","/reserve/**","/confirmReservation",
                             "/userPastReservations","/userFutureReservations").hasRole("USER");

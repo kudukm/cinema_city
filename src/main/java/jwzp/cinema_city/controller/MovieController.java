@@ -113,5 +113,4 @@ public class MovieController {
 
         return "reservation-success"; // Add a confirmation page or message
     }
-
 }
