@@ -26,13 +26,12 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/api/login")
                         .permitAll())
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/", "/register","/screenings").permitAll();
-                    registry.requestMatchers("/addMovie","/addScreening","/panel").hasRole("ADMIN");
-                    registry.requestMatchers("/movies-list","/reserve/**","/confirmReservation",
-                            "/userPastReservations","/userFutureReservations").hasRole("USER");
+                    registry.requestMatchers("/", "/api/register","/api/screenings","/api/movies-list").permitAll();
+                    registry.requestMatchers("/api/user/**","/user/**").hasRole("ADMIN");
+                    registry.requestMatchers("/api/admin/**","/admin/**").hasRole("USER");
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
