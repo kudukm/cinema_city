@@ -45,7 +45,7 @@ public class AdminController {
     @PostMapping("/api/admin/addScreening")
     public ResponseEntity<String> addScreening(@RequestBody Screening screening) {
         screeningService.addScreening(screening);
-        return new  ResponseEntity<>("Created new Screening Sucesfully", HttpStatus.CREATED);
+        return new  ResponseEntity<>("Created new Screening successfully", HttpStatus.CREATED);
     }
 
 }
