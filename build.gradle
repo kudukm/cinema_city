@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 tasks.named('test') {

@@ -1,45 +1,38 @@
 package jwzp.cinema_city.controller;
 
 import jwzp.cinema_city.models.Reservation;
+import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.models.UserEntity;
+import jwzp.cinema_city.service.ReservationService;
+import jwzp.cinema_city.service.ScreeningService;
 import jwzp.cinema_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
+import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
+import org.apache.commons.lang3.tuple.Pair;
 
-@Controller
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ScreeningService screeningService;
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserEntity());
-        return "register";
-    }
+    @Autowired
+    private ReservationService reservationService;
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.registerUser(user);
-        return "redirect:/register?success";
-    }
 
     @GetMapping("/userPastReservations")
-    public String userPastReservations(Model model) {
+    public ResponseEntity<List<Reservation>> userPastReservations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 
@@ -48,12 +41,11 @@ public class UserController {
         LocalDateTime time = LocalDateTime.now();
 
         List<Reservation> reservations = userService.getPastReservations(user,time);
-        model.addAttribute("reservations", reservations);
-        return "userPastReservations";
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/userFutureReservations")
-    public String userFutureReservations(Model model) {
+    public ResponseEntity<List<Reservation>> userFutureReservations(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 
@@ -62,13 +54,26 @@ public class UserController {
         LocalDateTime time = LocalDateTime.now();
 
         List<Reservation> reservations = userService.getFutureReservations(user,time);
-        model.addAttribute("reservations", reservations);
-        return "userFutureReservations";
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        return "customLogin";
+    @GetMapping("/reserve")
+    public ResponseEntity<Pair<Screening,Reservation>> showReservePage(@RequestBody String id) {
+        Screening screening = screeningService.findScreeningById(id);
+        Pair<Screening,Reservation> response = Pair.of(screening,new Reservation());
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PostMapping("/reserve")
+    public ResponseEntity<Reservation> reserveSeats(@RequestBody Reservation reservation) {
+        return new ResponseEntity<>(reservation,HttpStatus.OK);
+    }
+
+    @PostMapping("/confirmReservation")
+    public ResponseEntity<String> confirmReservation(@RequestBody Reservation reservation) {
+        reservationService.saveReservation(reservation);
+        screeningService.updateSeatsForReservation(reservation);
+        return new ResponseEntity<>("Succesfull reservation",HttpStatus.CREATED);
     }
 
 }

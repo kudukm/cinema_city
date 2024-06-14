@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class PublicController {
 
     //removed reutn of date atribute which should not be nessesary
     @GetMapping("/screenings")
-    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestBody(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             date = LocalDate.now();
         }
