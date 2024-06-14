@@ -50,6 +50,11 @@ public class PublicController {
         return new ResponseEntity<>("login", HttpStatus.OK);
     }
 
+    @PostMapping("/api/login")
+    public ResponseEntity<String> loginPost() {
+        return new ResponseEntity<>("Login successful", HttpStatus.OK);
+    }
+
     @GetMapping("/api/movies-list")
     public ResponseEntity<List<Movie>> listMovies() {
         List<Movie> movies = movieService.findAllMovies();
