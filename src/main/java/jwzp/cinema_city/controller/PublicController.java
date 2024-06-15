@@ -10,7 +10,7 @@ import jwzp.cinema_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
@@ -63,7 +63,7 @@ public class PublicController {
 
     //removed return of date attribute which should not be necessary
     @GetMapping("/api/screenings")
-    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestBody(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             date = LocalDate.now();
         }

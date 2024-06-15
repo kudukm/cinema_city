@@ -35,11 +35,12 @@ $(document).ready(function() {
     $("#date").val(today);
     fetchScreenings(today);
 
+    /*
     // Fetch screenings on date change
     $("#date").change(function() {
         let selectedDate = $(this).val();
         fetchScreenings(selectedDate);
-    });
+    });*/
 
     // Fetch screenings on form submit
     $("form").submit(function(event) {
