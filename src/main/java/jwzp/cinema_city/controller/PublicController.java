@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 import java.util.List;
 
-@Controller
+@RestController
 public class PublicController {
 
     @Autowired
@@ -61,8 +61,8 @@ public class PublicController {
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
-    //removed reutn of date atribute which should not be nessesary
-    @GetMapping("/screenings")
+    //removed return of date attribute which should not be necessary
+    @GetMapping("/api/screenings")
     public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestBody(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             date = LocalDate.now();

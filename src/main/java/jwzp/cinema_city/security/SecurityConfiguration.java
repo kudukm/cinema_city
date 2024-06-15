@@ -25,16 +25,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(registry -> {
+                    registry
+                            .requestMatchers("/", "/api/register", "/api/screenings/**", "/api/movies-list",
+                                    "/screenings", "/css/**", "/js/**").permitAll()
+                            .requestMatchers("/api/user/**", "/user/**", "/addMovie", "/addScreening", "/panel").hasRole("ADMIN")
+                            .requestMatchers("/api/admin/**", "/admin/**").hasRole("USER")
+                            .anyRequest().authenticated();
+                })
                 .formLogin(form -> form
                         .loginPage("/api/login")
                         .permitAll())
-                .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/", "/api/register","/api/screenings","/api/movies-list").permitAll();
-                    registry.requestMatchers("/api/user/**","/user/**").hasRole("ADMIN");
-                    registry.requestMatchers("/api/admin/**","/admin/**").hasRole("USER");
-                    registry.anyRequest().authenticated();
-                })
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
     }
 
@@ -55,5 +56,4 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
