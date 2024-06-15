@@ -11,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,14 +29,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry -> {
+                .authorizeHttpRequests(registry ->
                     registry
-                            .requestMatchers("/", "/api/register", "/api/screenings/**", "/api/movies-list",
-                                    "/screenings", "/css/**", "/js/**").permitAll()
+                            .requestMatchers("/", "/api/register", "/api/screenings", "/api/movies-list",
+                                    "/register", "/screenings", "/css/**", "/js/**", "/html/**").permitAll()
                             .requestMatchers("/api/admin/**", "/admin/**", "/addMovie", "/addScreening", "/panel").hasRole("ADMIN")
                             .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
-                            .anyRequest().authenticated();
-                })
+                            .anyRequest().authenticated()
+                )
                 .formLogin(form -> form
                         .loginPage("/api/login")
                         .permitAll())

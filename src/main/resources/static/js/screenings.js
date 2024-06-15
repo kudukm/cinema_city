@@ -30,10 +30,12 @@ $(document).ready(function() {
         });
     }
 
+
     // Initial fetch for today's date
     let today = new Date().toISOString().split('T')[0];
     $("#date").val(today);
     fetchScreenings(today);
+
 
     /*
     // Fetch screenings on date change
