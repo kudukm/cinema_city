@@ -31,9 +31,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
                     registry
-                            .requestMatchers("/", "/api/register", "/api/screenings", "/api/movies-list",
-                                    "/register", "/screenings", "/css/**", "/js/**", "/html/**").permitAll()
-                            .requestMatchers("/api/admin/**", "/admin/**", "/addMovie", "/addScreening", "/panel").hasRole("ADMIN")
+                            .requestMatchers("/", "/public/**", "/api/register", "/api/screenings", "/api/movies-list",
+                                    "/html/public/**", "/css/**", "/js/**", "/favicon.ico").permitAll()
+                            .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
                             .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
                             .anyRequest().authenticated()
                 )

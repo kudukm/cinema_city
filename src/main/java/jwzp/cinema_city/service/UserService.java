@@ -7,6 +7,7 @@ import jwzp.cinema_city.repository.ReservationRepository;
 import jwzp.cinema_city.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,11 +47,12 @@ public class UserService implements UserDetailsService {
     }
 
     private String[] getRoles(UserEntity user) {
-        if (user.getRole() == null) {
+        if (user.getAuthorities().isEmpty()) {
             return new String[]{"USER"};
         }
-        return user.getRole().split(",");
+        return user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new);
     }
+
     public UserEntity getUserByID(String id){
         return userRepository.findById(id).orElse(null);
     }

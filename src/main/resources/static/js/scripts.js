@@ -20,7 +20,7 @@ $(document).ready(function() {
             return '/html/' + initialPath + '.html' + location.search;
         }
         else {
-            return '/html/home.html';
+            return '/html/public/home.html';
         }
     }
 
@@ -31,15 +31,15 @@ $(document).ready(function() {
     $('a').on('click', function(e) {
         e.preventDefault();
         let pageRef = $(this).attr('href');
-        let pageAddress = pageRef !== '/' ? pageRef.substring(1) + '.html' : 'home.html';
+        let pageAddress = pageRef !== '/' ? pageRef.substring(1) + '.html' : 'public/home.html';
         callPage('/html/' + pageAddress);
         history.pushState(null, '', pageRef);
     });
 
     // Handle browser navigation (back/forward)
     window.onpopstate = function() {
-        var path = location.pathname.substring(1);
-        var page = (path === '' ? 'home' : path) + '.html';
+        let path = location.pathname.substring(1);
+        let page = (path === '' ? 'public/home' : path) + '.html';
         callPage('/html/' + page);
     };
 });
