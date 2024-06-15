@@ -1,50 +1,43 @@
 package jwzp.cinema_city.controller;
 
+import jwzp.cinema_city.models.UserEntity;
+import jwzp.cinema_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api")
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-            );
-            return ResponseEntity.ok("Login successful");
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(401).body("Invalid username or password");
-        }
-    }
-}
+    @Autowired
+    private UserService userService;
 
-class AuthRequest {
-    private String username;
-    private String password;
+    @PostMapping("/api/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest) {
+        String username = loginRequest.get("username");
+        String password = loginRequest.get("password");
+        UserDetails userDetails = userService.loadUserByUsername(username);
 
-    public String getUsername() {
-        return username;
-    }
+        // Perform custom authentication logic (e.g., check password)
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, password);
+        Authentication authentication = authenticationManager.authenticate(authToken);
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        // If authentication successful, create JWT token or return success message
+        // You can implement JWT creation logic or return a success message as per your requirement.
 
-    public String getPassword() {
-        return password;
-    }
+        // Example:
+        // String token = jwtTokenUtil.generateToken(userDetails);
 
-    public void setPassword(String password) {
-        this.password = password;
+        return ResponseEntity.ok("Login successful!"); // Replace with token generation logic if using JWT
     }
 }

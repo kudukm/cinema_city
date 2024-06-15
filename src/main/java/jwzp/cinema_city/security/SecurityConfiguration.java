@@ -30,16 +30,13 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
-                    registry
-                            .requestMatchers("/", "/public/**", "/api/register", "/api/screenings", "/api/movies-list",
-                                    "/html/public/**", "/css/**", "/js/**", "/favicon.ico").permitAll()
-                            .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
-                            .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
-                            .anyRequest().authenticated()
+                        registry
+                                .requestMatchers("/", "/public/**", "/api/register", "/api/screenings", "/api/movies-list",
+                                        "/html/public/**", "/css/**", "/js/**", "/favicon.ico","/api/login").permitAll()
+                                .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
+                                .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/api/login")
-                        .permitAll())
                 .exceptionHandling(customizer -> customizer
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
@@ -68,4 +65,6 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
+
