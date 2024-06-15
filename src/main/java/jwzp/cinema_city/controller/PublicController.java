@@ -63,8 +63,7 @@ public class PublicController {
 
     //removed return of date attribute which should not be necessary
     @GetMapping("/api/screenings")
-    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestParam(value = "date",required = false) @DateTimeFormat(iso =
-            DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestBody(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             date = LocalDate.now();
         }
