@@ -29,8 +29,8 @@ public class SecurityConfiguration {
                     registry
                             .requestMatchers("/", "/api/register", "/api/screenings/**", "/api/movies-list",
                                     "/screenings", "/css/**", "/js/**").permitAll()
-                            .requestMatchers("/api/user/**", "/user/**", "/addMovie", "/addScreening", "/panel").hasRole("ADMIN")
-                            .requestMatchers("/api/admin/**", "/admin/**").hasRole("USER")
+                            .requestMatchers("/api/admin/**", "/admin/**", "/addMovie", "/addScreening", "/panel").hasRole("ADMIN")
+                            .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
                             .anyRequest().authenticated();
                 })
                 .formLogin(form -> form

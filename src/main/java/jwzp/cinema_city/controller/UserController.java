@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
@@ -45,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/userFutureReservations")
-    public ResponseEntity<List<Reservation>> userFutureReservations(Model model) {
+    public ResponseEntity<List<Reservation>> userFutureReservations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 
@@ -58,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/reserve")
-    public ResponseEntity<Pair<Screening,Reservation>> showReservePage(@RequestBody String id) {
+    public ResponseEntity<Pair<Screening,Reservation>> showReservePage(@RequestParam(value = "id") String id) {
         Screening screening = screeningService.findScreeningById(id);
         Pair<Screening,Reservation> response = Pair.of(screening,new Reservation());
         return new ResponseEntity<>(response,HttpStatus.OK);
