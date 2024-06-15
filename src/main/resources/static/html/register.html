@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Register</title>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <form class="form-signin" action="#" th:action="@{/register}" th:object="${user}" method="post">
@@ -23,7 +22,7 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
   </p>
 </form>
-<div style="display: none;" th:if="${param.success}">
+<div class="d-none" th:if="${param.success}">
   <p>Registration successful!</p>
 </div>
 </body>

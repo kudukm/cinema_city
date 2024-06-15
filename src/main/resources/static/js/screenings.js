@@ -7,11 +7,11 @@ $(document).ready(function() {
             success: function(screenings) {
                 $("#selectedDate").text(date);
                 if (screenings.length === 0) {
-                    $("#noScreeningsMessage").show();
-                    $("#screeningsTable").hide();
+                    $("#noScreeningsMessage").removeClass("d-none");
+                    $("#screeningsTable").addClass("d-none");
                 } else {
-                    $("#noScreeningsMessage").hide();
-                    $("#screeningsTable").show();
+                    $("#noScreeningsMessage").addClass("d-none");
+                    $("#screeningsTable").removeClass("d-none");
                     $("#screeningsBody").empty();
                     screenings.forEach(function(screening) {
                         $("#screeningsBody").append(

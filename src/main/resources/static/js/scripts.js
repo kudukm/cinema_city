@@ -1,11 +1,12 @@
 $(document).ready(function() {
-    function callPage(url, pageTitle) {
+    function callPage(url) {
         $.ajax({
             url: url,
             dataType: 'html',
             success: function(data) {
-                document.title = pageTitle;
-                $('#content').html(data);
+                let content = $('#content')
+                content.html(data);
+                document.title = content.find('title').text() + ' | CinemaCity';
             },
             error: function() {
                 $('#content').html('<p>Error loading page.</p>');
@@ -24,15 +25,14 @@ $(document).ready(function() {
     }
 
     // Load the beginning content
-    callPage(getLocation(), "CinemaCity");
+    callPage(getLocation());
 
     // Handle link clicks
     $('a').on('click', function(e) {
         e.preventDefault();
         let pageRef = $(this).attr('href');
         let pageAddress = pageRef !== '/' ? pageRef.substring(1) + '.html' : 'home.html';
-        let pageTitle = $(this).text() + ' | CinemaCity'
-        callPage('/html/' + pageAddress, pageTitle);
+        callPage('/html/' + pageAddress);
         history.pushState(null, '', pageRef);
     });
 
