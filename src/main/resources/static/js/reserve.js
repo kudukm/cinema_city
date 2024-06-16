@@ -1,21 +1,28 @@
 $(document).ready(function() {
+    let currentReservation;
+    let headers;
     function fetchSeats() {
         id = location.hash.substring(1);
+        if (localStorage.getItem('jwtToken')) {
+            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
+        }
         $.ajax({
             url: "/api/user/reserve",
+            headers: headers,
             type: "GET",
             data: {id: id},
-            success: function(screening) {
-                if(screening) {
-                    $('#movie-title').text('${screening.movie.title}');
-                    $('#screening-time').text("${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}");
-                    $("input[name='screeningId']").attr('value', '${screening.id}');
-                    $("input[name='movieTitle']").attr('value', '${screening.movie.title}');
-                    $("input[name='screeningTime']").attr('value', "${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}");
+            success: function(reservation) {
+                if(reservation) {
+                    currentReservation = reservation;
+                    $('#movie-title').text(reservation.screening.movie.title);
+                    $('#screening-time').text(reservation.screening.screeningTime);
+                    // $("input[name='screeningId']").attr('value', reservation.screening.id);
+                    // $("input[name='movieTitle/']").attr('value', reservation.screening.movie.title);
+                    // $("input[name='screeningTime']").attr('value', reservation.screening.screeningTime);
                     let seatContainer = $('#seats-selector');
                     seatContainer.empty();
 
-                    screening.seats.forEach(function(seat, index) {
+                    reservation.screening.seats.forEach(function(seat, index) {
                         let seatLabel = $('<label></label>');
                         let seatInput = $('<input>', {
                             type: 'checkbox',
@@ -35,6 +42,7 @@ $(document).ready(function() {
                 }
                 else {
                     $("#seats-selector").text('Unexpected response from server.');
+                    $('.btn-primary').prop("disabled",true);
                 }
             },
             error: function () {
@@ -44,6 +52,33 @@ $(document).ready(function() {
     }
 
     fetchSeats();
+
+    $("form").submit(function(event) {
+        event.preventDefault();
+
+        let selectedSeats = [];
+        $("#seats-selector input[name='seats']:checked").each(function() {
+            if (!$(this).prop("disabled")) {
+                selectedSeats.push(parseInt($(this).val()));
+            }
+        });
+
+        currentReservation.seats = selectedSeats;
+        $.ajax({
+            url: "/api/user/reserve",
+            headers: headers,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(currentReservation),
+            success: function(response) {
+                console.log(JSON.stringify(currentReservation))
+                console.log("Reservation sent");
+            },
+            error: function(xhr, status, error) {
+                console.log("Reservation failed: " + error);
+            }
+        });
+    });
 });
 
 /*
