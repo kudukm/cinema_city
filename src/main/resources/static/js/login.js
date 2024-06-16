@@ -2,8 +2,8 @@ $(document).ready(function() {
     $('.form-signin').on('submit', function(event) {
         event.preventDefault();
 
-        var username = $('#username').val();
-        var password = $('#password').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
 
         $.ajax({
             url: '/api/login',
@@ -11,11 +11,16 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify({ username: username, password: password }),
             success: function(response) {
-                alert('Login successful');
-                window.location.href = '/';
+                if (response) {
+                    $("#log-in-status").text('Log in successful');
+                    localStorage.setItem('jwtToken', response);
+                    window.location.href = '/';
+                } else {
+                    $("#log-in-status").text('Unexpected response from server');
+                }
             },
-            error: function(xhr, status, error) {
-                $("#wrong-pass").removeClass("d-none");
+            error: function() {
+                $("#log-in-status").text('Invalid username or password');
             }
         });
     });

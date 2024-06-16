@@ -1,7 +1,12 @@
 $(document).ready(function() {
     function callPage(url) {
+        let headers;
+        if (localStorage.getItem('jwtToken')) {
+            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
+        }
         $.ajax({
             url: url,
+            headers: headers,
             dataType: 'html',
             success: function(data) {
                 let content = $('#content')

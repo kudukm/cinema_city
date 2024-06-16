@@ -29,6 +29,15 @@ public class UserController {
     @Autowired
     private ReservationService reservationService;
 
+    @GetMapping("/me")
+    public ResponseEntity<UserEntity> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentUser);
+    }
+
 
     @GetMapping("/userPastReservations")
     public ResponseEntity<List<Reservation>> userPastReservations() {

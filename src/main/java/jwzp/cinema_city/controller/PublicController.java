@@ -44,10 +44,10 @@ public class PublicController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/login")
+    /*@GetMapping("/api/login")
     public ResponseEntity<String> loginPage() {
         return new ResponseEntity<>("login", HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/api/movies-list")
     public ResponseEntity<List<Movie>> listMovies() {
