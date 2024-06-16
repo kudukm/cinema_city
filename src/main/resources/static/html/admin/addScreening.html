@@ -1,32 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/path/to/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Add Screening</title>
+
 </head>
 <body>
-<div class="container">
-    <h2>Add Screening</h2>
-    <form th:action="@{/addScreening}" th:object="${screening}" method="post">
-        <div class="form-group">
-            <label for="movie">Movie</label>
-            <select class="form-control" id="movie" name="movieId" th:field="*{movie.id}">
-                <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">Movie</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="screeningTime">Screening Time</label>
-            <input type="datetime-local" class="form-control" id="screeningTime" name="screeningTime" th:field="*{screeningTime}">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Screening</button>
-    </form>
+<h2>Add Screening</h2>
+<form id="addScreeningForm" action="/addScreening" method="post">
+    <div class="form-group">
+        <label for="movie">Movie</label>
+        <select class="form-control" id="movie" name="movieId">
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="screeningTime">Screening Time</label>
+        <input type="datetime-local" class="form-control" id="screeningTime" name="screeningTime" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Screening</button>
+</form>
+<div id="success-message" class="success-message">
+    <p>Successfully added a screening!</p>
 </div>
-<script>
-        $(document).ready(function() {
-            $('#movie').select2({
-                placeholder: 'Select a movie',
-                allowClear: false
-            });
-        });
-    </script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Your custom JavaScript file -->
+<script src="/js/addScreening.js"></script>
 </body>
 </html>

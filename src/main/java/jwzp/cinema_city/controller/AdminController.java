@@ -29,23 +29,30 @@ public class AdminController {
         return new ResponseEntity<>(new Movie(), HttpStatus.OK);
     }
 
-    @PostMapping("/api/admin/addMovie")
-    public ResponseEntity<String> registerMovie(@RequestBody Movie movie) {
-        movieService.registerMovie(movie);
-        return new ResponseEntity<>("Movie created successfully", HttpStatus.CREATED);
+    @PostMapping("/admin/addMovie")
+    public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
+        try {
+            movieService.registerMovie(movie);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Movie created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the movie. Please try again.");
+        }
     }
 
     @GetMapping("/api/admin/addScreening")
-    public ResponseEntity<Pair<List<Movie>,Screening>> showAddScreeningForm() {
-        List<Movie> movies = movieService.findAllMovies();
-        Pair<List<Movie>,Screening> response = Pair.of(movies, new Screening());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<List<Movie>> showAddScreeningForm() {
+        List<Movie> movies = movieService.findAllMovies();;
+        return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
-    @PostMapping("/api/admin/addScreening")
+    @PostMapping("/admin/addScreening")
     public ResponseEntity<String> addScreening(@RequestBody Screening screening) {
-        screeningService.addScreening(screening);
-        return new  ResponseEntity<>("Created new Screening successfully", HttpStatus.CREATED);
+        try {
+            screeningService.addScreening(screening);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Screening added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the screening. Please try again.");
+        }
     }
 
 }

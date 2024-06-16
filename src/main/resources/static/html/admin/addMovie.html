@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/addMovie.js"></script>
     <title>Add Movie</title>
 </head>
 <body>
-<h2>addMovie</h2>
-<form action="#" th:action="@{/addMovie}" th:object="${movie}" method="post">
+<h2>Add Movie</h2>
+<form id="addMovieForm" action="/admin/addMovie" method="post">
     <div>
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" th:field="*{title}" required>
+        <input type="text" id="title" name="title" required>
     </div>
     <div>
-        <label for="posterURL">URL of movie poster:</label>
-        <input type="posterURL" id="posterURL" name="posterURL" th:field="*{posterURL}" required>
+        <label for="posterURL">URL of Movie Poster:</label>
+        <input type="url" id="posterURL" name="posterURL" required>
     </div>
     <div>
-        <label for="description">description:</label>
-        <input type="description" id="description" name="description" th:field="*{description}" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
     </div>
     <div>
-        <label for="duration">duration:</label>
-        <input type="duration" id="duration" name="duration" th:field="*{duration}" required>
+        <label for="duration">Duration:</label>
+        <input type="text" id="duration" name="duration" required>
     </div>
     <div>
-        <button type="submit">+</button>
+        <button type="submit">ADD MOVIE</button>
     </div>
 </form>
-<div th:if="${param.success}">
-    <p>succesfully added a movie</p>
+<div id="success-message" class="success-message">
+    <p>Successfully added a movie!</p>
 </div>
 </body>
 </html>
