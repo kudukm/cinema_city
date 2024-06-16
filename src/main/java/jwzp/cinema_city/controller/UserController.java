@@ -18,7 +18,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     private ReservationService reservationService;
 
-    @GetMapping("/me")
+    @GetMapping("/api/user/me")
     public ResponseEntity<UserEntity> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -39,7 +39,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/userPastReservations")
+    @GetMapping("/api/user/userPastReservations")
     public ResponseEntity<List<Reservation>> userPastReservations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -52,7 +52,7 @@ public class UserController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/userFutureReservations")
+    @GetMapping("/api/user/userFutureReservations")
     public ResponseEntity<List<Reservation>> userFutureReservations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -65,23 +65,23 @@ public class UserController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/reserve")
+    @GetMapping("/api/user/reserve")
     public ResponseEntity<Pair<Screening,Reservation>> showReservePage(@RequestParam(value = "id") String id) {
         Screening screening = screeningService.findScreeningById(id);
         Pair<Screening,Reservation> response = Pair.of(screening,new Reservation());
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @PostMapping("/reserve")
+    @PostMapping("/api/user/reserve")
     public ResponseEntity<Reservation> reserveSeats(@RequestBody Reservation reservation) {
         return new ResponseEntity<>(reservation,HttpStatus.OK);
     }
 
-    @PostMapping("/confirmReservation")
+    @PostMapping("/api/user/confirmReservation")
     public ResponseEntity<String> confirmReservation(@RequestBody Reservation reservation) {
         reservationService.saveReservation(reservation);
         screeningService.updateSeatsForReservation(reservation);
-        return new ResponseEntity<>("Succesfull reservation",HttpStatus.CREATED);
+        return new ResponseEntity<>("Successful reservation",HttpStatus.CREATED);
     }
 
 }

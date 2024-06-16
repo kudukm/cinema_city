@@ -5,7 +5,7 @@ $(document).ready(function() {
             headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
         }
         $.ajax({
-            url: "/api/movies-list",
+            url: "/api/user/movies-list",
             headers: headers,
             type: "GET",
             success: function (movies) {

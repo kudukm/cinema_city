@@ -39,10 +39,10 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
                         registry
-                                .requestMatchers("/", "/public/**", "/api/register", "/api/screenings", "/api/movies-list",
-                                        "/html/public/**", "/css/**", "/js/**", "/favicon.ico","/api/login").permitAll()
-                                .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/api/user/**", "/user/**").hasRole("USER")
+                                .requestMatchers("/", "/public/**", "/admin/**", "/user/**", "/api/public/**",
+                                        "/html/public/**", "/css/**", "/js/**", "/favicon.ico").permitAll()
+                                .requestMatchers("/html/admin/**", "/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/html/user/**", "/api/user/**").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 /*.exceptionHandling(customizer -> customizer

@@ -33,12 +33,12 @@ public class PublicController {
         return new ResponseEntity<>("home", HttpStatus.OK);
     }*/
 
-    @GetMapping("/api/register")
+    @GetMapping("/api/public/register")
     public ResponseEntity<UserEntity> showRegistrationForm() {
         return new ResponseEntity<>(new UserEntity(), HttpStatus.OK);
     }
 
-    @PostMapping("/api/register")
+    @PostMapping("/api/public/register")
     public ResponseEntity<String> registerUser(@RequestBody UserEntity user) {
         userService.registerUser(user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
@@ -49,14 +49,14 @@ public class PublicController {
         return new ResponseEntity<>("login", HttpStatus.OK);
     }*/
 
-    @GetMapping("/api/movies-list")
+    @GetMapping("/api/user/movies-list")
     public ResponseEntity<List<Movie>> listMovies() {
         List<Movie> movies = movieService.findAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
     //removed return of date attribute which should not be necessary
-    @GetMapping("/api/screenings")
+    @GetMapping("/api/public/screenings")
     public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
             date = LocalDate.now();

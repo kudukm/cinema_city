@@ -22,7 +22,7 @@ $(document).ready(function() {
     function getLocation() {
         const initialPath = location.pathname.substring(1);
         if(initialPath) {
-            return '/html/' + initialPath + '.html' + location.search;
+            return '/html/' + initialPath + '.html' + location.search + location.hash;
         }
         else {
             return '/html/public/home.html';
