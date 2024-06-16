@@ -75,3 +75,8 @@ button:hover {
     font-weight: bold;
     display: none;
 }
+
+#seats-selector label {
+    display: inline-block;
+    width: 20%;
+}

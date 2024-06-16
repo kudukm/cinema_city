@@ -30,10 +30,10 @@ public class UserController {
     private ReservationService reservationService;
 
     @GetMapping("/api/user/me")
-    public ResponseEntity<UserEntity> authenticatedUser() {
+    public ResponseEntity<UserDetails> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+        UserDetails currentUser = (UserDetails) authentication.getPrincipal();
 
         return ResponseEntity.ok(currentUser);
     }
@@ -66,10 +66,16 @@ public class UserController {
     }
 
     @GetMapping("/api/user/reserve")
-    public ResponseEntity<Pair<Screening,Reservation>> showReservePage(@RequestParam(value = "id") String id) {
+    public ResponseEntity<Reservation> showReservePage(@RequestParam(value = "id") String id) {
         Screening screening = screeningService.findScreeningById(id);
-        Pair<Screening,Reservation> response = Pair.of(screening,new Reservation());
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        Reservation reservation = new Reservation();
+        reservation.setScreening(screening);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails currentUserDetails = (UserDetails) authentication.getPrincipal();
+        UserEntity currentUserEntity = userService.findByUsername(currentUserDetails.getUsername());
+        reservation.setUser(currentUserEntity);
+
+        return new ResponseEntity<>(reservation,HttpStatus.OK);
     }
 
     @PostMapping("/api/user/reserve")
