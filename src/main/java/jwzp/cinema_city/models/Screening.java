@@ -16,10 +16,9 @@ public class Screening {
 
     private LocalDateTime screeningTime;
 
-    private Boolean[] seats = new Boolean[40]; // Initialize with default values (null)
+    private Boolean[] seats = new Boolean[40];
 
     public Screening() {
-        // Initialize seats with all false (unreserved)
         Arrays.fill(seats, false);
     }
 

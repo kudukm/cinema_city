@@ -5,9 +5,12 @@ import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.service.MovieService;
 import jwzp.cinema_city.service.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -18,11 +21,6 @@ public class AdminController {
 
     @Autowired
     private ScreeningService screeningService;
-
-    @GetMapping("/admin/panel")
-    public ResponseEntity<String> admin(){
-        return new ResponseEntity<>("admin", HttpStatus.OK);
-    }
 
     @GetMapping("/api/admin/addMovie")
     public ResponseEntity<Movie> showRegistrationForm() {
@@ -46,12 +44,20 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addScreening")
-    public ResponseEntity<String> addScreening(@RequestBody Screening screening) {
+    public ResponseEntity<String> addScreening( @RequestParam String movieId,
+                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime screeningTime) {
         try {
+            Screening screening = new Screening();
+            screening.setMovie(movieService.findMovieById(movieId));
+            screening.setScreeningTime(screeningTime);
+
+
             screeningService.addScreening(screening);
+
             return ResponseEntity.status(HttpStatus.CREATED).body("Screening added successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the screening. Please try again.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    "Failed to add the screening. Please try again.");
         }
     }
 
