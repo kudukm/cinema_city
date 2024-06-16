@@ -1,32 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Add Screening</title>
+    <style>
+        h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="datetime-local"] {
+            width: calc(100% - 20px);
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2>Add Screening</h2>
-    <form th:action="@{/addScreening}" th:object="${screening}" method="post">
-        <div class="form-group">
-            <label for="movie">Movie</label>
-            <select class="form-control" id="movie" name="movieId" th:field="*{movie.id}">
-                <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">Movie</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="screeningTime">Screening Time</label>
-            <input type="datetime-local" class="form-control" id="screeningTime" name="screeningTime" th:field="*{screeningTime}">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Screening</button>
-    </form>
+<h2>Add Screening</h2>
+<form id="addScreeningForm" action="/addScreening" method="post">
+    <div class="form-group">
+        <label for="movie">Movie</label>
+        <select class="form-control" id="movie" name="movieId">
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="screeningTime">Screening Time</label>
+        <input type="datetime-local" class="form-control" id="screeningTime" name="screeningTime" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Screening</button>
+</form>
+<div id="success-message" class="success-message">
+    <p>Successfully added a screening!</p>
 </div>
-<script>
-        $(document).ready(function() {
-            $('#movie').select2({
-                placeholder: 'Select a movie',
-                allowClear: false
-            });
-        });
-    </script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Your custom JavaScript file -->
+<script src="/js/addScreening.js"></script>
 </body>
 </html>
