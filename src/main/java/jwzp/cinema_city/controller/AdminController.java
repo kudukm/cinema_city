@@ -19,11 +19,6 @@ public class AdminController {
     @Autowired
     private ScreeningService screeningService;
 
-    @GetMapping("/admin/panel")
-    public ResponseEntity<String> admin(){
-        return new ResponseEntity<>("admin", HttpStatus.OK);
-    }
-
     @GetMapping("/api/admin/addMovie")
     public ResponseEntity<Movie> showRegistrationForm() {
         return new ResponseEntity<>(new Movie(), HttpStatus.OK);
