@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html lang="en">
 <head>
+    <script src="/js/movies-list.js"></script>
     <title>Movies List</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-    <section layout:fragment="body" class="py-5">
-        <div class="container px-5 my-5">
+    <section>
+        <div class="container px-5">
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Movies</h1>
             </div>
-            <div class="row gx-5">
-                <div th:each="movie : ${movies}" class="col-lg-6 mb-2">
-                    <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${movie.posterURL}" alt="..." />
-                        <a th:text="${movie.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
-                    </div>
-                </div>
-            </div>
+            <div id="movies-container" class="row gx-5"></div>
         </div>
     </section>
 </main>
