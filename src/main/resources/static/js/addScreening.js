@@ -16,28 +16,28 @@ $(document).ready(function() {
 
     // Handle form submission via AJAX
     $('#addScreeningForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); // Prevent the default form submission
 
-        // Collect form data
-        var formData = {
-            movieId: $('#movie').val(),
-            screeningTime: $('#screeningTime').val()
-        };
+            // Collect form data
+            var movieId = $('#movie').val();
+            var screeningTime = $('#screeningTime').val(); // Make sure this is formatted correctly
 
-        // Send AJAX POST request
-        $.ajax({
-            type: 'POST',
-            url: '/admin/addScreening', // Replace with your backend endpoint
-            contentType: 'application/json', // Set content type to JSON
-            data: JSON.stringify(formData), // Convert form data to JSON string
-            success: function(response) {
-                $('#success-message').show(); // Show success message
-                $('#addScreeningForm')[0].reset(); // Reset the form fields
-                $('#movie').val(''); // Reset select field
-            },
-            error: function(error) {
-                alert('Failed to add the screening. Please try again.');
-            }
+            // Send AJAX POST request
+            $.ajax({
+                type: 'POST',
+                url: '/admin/addScreening', // Replace with your backend endpoint
+                data: {
+                    movieId: movieId,
+                    screeningTime: screeningTime
+                },
+                success: function(response) {
+                    $('#success-message').show(); // Show success message
+                    $('#addScreeningForm')[0].reset(); // Reset the form fields
+                    $('#movie').val(''); // Reset select field
+                },
+                error: function(error) {
+                    alert('Failed to add the screening. Please try again.');
+                }
+            });
         });
-    });
 });
