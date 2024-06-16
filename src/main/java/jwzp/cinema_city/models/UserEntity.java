@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties({"authorities"})
 @Document(collection = "users")
 public class UserEntity implements UserDetails {
     @Id

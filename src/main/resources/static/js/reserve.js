@@ -65,7 +65,7 @@ $(document).ready(function() {
 
         currentReservation.seats = selectedSeats;
         $.ajax({
-            url: "/api/user/reserve",
+            url: "/api/user/confirmReservation",
             headers: headers,
             type: "POST",
             contentType: "application/json",
