@@ -1,17 +1,22 @@
 $(document).ready(function() {
     function fetchSeats() {
         id = location.hash.substring(1);
+        let headers;
+        if (localStorage.getItem('jwtToken')) {
+            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
+        }
         $.ajax({
             url: "/api/user/reserve",
+            headers: headers,
             type: "GET",
             data: {id: id},
             success: function(screening) {
                 if(screening) {
-                    $('#movie-title').text('${screening.movie.title}');
-                    $('#screening-time').text("${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}");
-                    $("input[name='screeningId']").attr('value', '${screening.id}');
-                    $("input[name='movieTitle']").attr('value', '${screening.movie.title}');
-                    $("input[name='screeningTime']").attr('value', "${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}");
+                    $('#movie-title').text(screening.movie.title);
+                    $('#screening-time').text(screening.screeningTime);
+                    $("input[name='screeningId']").attr('value', screening.id);
+                    $("input[name='movieTitle']").attr('value', screening.movie.title);
+                    $("input[name='screeningTime']").attr('value', screening.screeningTime);
                     let seatContainer = $('#seats-selector');
                     seatContainer.empty();
 
