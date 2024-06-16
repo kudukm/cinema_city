@@ -18,7 +18,7 @@ public class AuthController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/api/public/login")
     public ResponseEntity<String> authenticate(@RequestBody AuthRequest loginUserDto) {
         UserEntity authenticatedUser = authenticationService.authenticate(loginUserDto);
 

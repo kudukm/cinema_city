@@ -6,7 +6,7 @@ $(document).ready(function() {
         let password = $('#password').val();
 
         $.ajax({
-            url: '/api/login',
+            url: '/api/public/login',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ username: username, password: password }),
@@ -15,7 +15,8 @@ $(document).ready(function() {
                     $("#log-in-status").text('Log in successful');
                     localStorage.setItem('jwtToken', response);
                     window.location.href = '/';
-                } else {
+                }
+                else {
                     $("#log-in-status").text('Unexpected response from server');
                 }
             },

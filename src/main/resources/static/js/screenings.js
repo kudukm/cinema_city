@@ -1,7 +1,7 @@
 $(document).ready(function() {
     function fetchScreenings(date) {
         $.ajax({
-            url: "/api/screenings",
+            url: "/api/public/screenings",
             type: "GET",
             data: { date: date },
             success: function(screenings) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
                             `<tr>
                     <td>${screening.movie.title}</td>
                     <td>${screening.screeningTime}</td>
-                    <td><a href="/reserve/${screening.id}" class="btn btn-primary">Reserve</a></td>
+                    <td><a href="/user/reserve#${screening.id}" class="btn btn-primary">Reserve</a></td>
                   </tr>`
                         );
                     });
