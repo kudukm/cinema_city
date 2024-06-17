@@ -5,7 +5,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url: '/api/admin/addScreening',
+        url: '/api/admin/add-screening',
         headers: headers,
         method: 'GET',
         success: function(movies) {
@@ -28,7 +28,7 @@ $(document).ready(function() {
             $.ajax({
                 headers: headers,
                 type: 'POST',
-                url: '/api/admin/addScreening',
+                url: '/api/admin/add-screening',
                 data: {
                     movieId: movieId,
                     screeningTime: screeningTime

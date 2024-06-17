@@ -21,12 +21,12 @@ public class AdminController {
     @Autowired
     private ScreeningService screeningService;
 
-    @GetMapping("/api/admin/addMovie")
+    @GetMapping("/api/admin/add-movie")
     public ResponseEntity<Movie> showRegistrationForm() {
         return new ResponseEntity<>(new Movie(), HttpStatus.OK);
     }
 
-    @PostMapping("/api/admin/addMovie")
+    @PostMapping("/api/admin/add-movie")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
         try {
             movieService.registerMovie(movie);
@@ -36,13 +36,13 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/api/admin/addScreening")
+    @GetMapping("/api/admin/add-screening")
     public ResponseEntity<List<Movie>> showAddScreeningForm() {
         List<Movie> movies = movieService.findAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
-    @PostMapping("/api/admin/addScreening")
+    @PostMapping("/api/admin/add-screening")
     public ResponseEntity<String> addScreening( @RequestParam String movieId,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime screeningTime) {
         try {

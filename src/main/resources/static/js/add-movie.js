@@ -13,7 +13,7 @@ document.getElementById('addMovieForm').addEventListener('submit', function(even
         duration: document.getElementById('duration').value
     };
 
-    fetch('/api/admin/addMovie', {
+    fetch('/api/admin/add-movie', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
