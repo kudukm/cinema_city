@@ -13,8 +13,19 @@ $(document).ready(function() {
                 content.html(data);
                 document.title = content.find('title').text() + ' | CinemaCity';
             },
+            statusCode: {
+                401: function() {
+                    $('#content').html('<p>401 (Unauthorized) - Log in before opening this page.</p>');
+                },
+                403: function() {
+                    $('#content').html("<p>403 (Forbidden) - You aren't allowed to see this page.</p>");
+                },
+                404: function() {
+                    $('#content').html("<p>404 (Not found) - Page wasn't found.</p>");
+                }
+            },
             error: function() {
-                $('#content').html('<p>Error loading page.</p>');
+                $('#content').html('<p>Another page loading error.</p>');
             }
         });
     }
