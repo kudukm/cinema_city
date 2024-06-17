@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(registry ->
                         registry
                                 .requestMatchers("/", "/public/**", "/admin/**", "/user/**", "/api/public/**",
-                                        "/html/public/**", "/css/**", "/js/**", "/favicon.ico").permitAll()
+                                        "/html/public/**", "/css/**", "/js/**", "/favicon.ico", "/api/user/me").permitAll()
                                 .requestMatchers("/html/admin/**", "/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/html/user/**", "/api/user/**").hasRole("USER")
                                 .anyRequest().authenticated()

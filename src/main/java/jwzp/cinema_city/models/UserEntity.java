@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -86,6 +87,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        String[] authoritiesStrings = role.split(",");
+        LinkedList<SimpleGrantedAuthority> authorities = new LinkedList<>();
+        for (String authority : authoritiesStrings) {
+            authorities.add(new SimpleGrantedAuthority(authority));
+        }
+        return authorities;
     }
 }
