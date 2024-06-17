@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let currentReservation;
     let headers;
+    let selectedSeats = [];
     function fetchSeats() {
         id = location.hash.substring(1);
         if (localStorage.getItem('jwtToken')) {
@@ -53,15 +54,21 @@ $(document).ready(function() {
 
     fetchSeats();
 
-    $("form").submit(function(event) {
+    $("#seats-reservation").submit(function(event) {
         event.preventDefault();
 
-        let selectedSeats = [];
         $("#seats-selector input[name='seats']:checked").each(function() {
             if (!$(this).prop("disabled")) {
                 selectedSeats.push(parseInt($(this).val()));
             }
         });
+
+        $('#selected-seats').text('Selected seats: ' + JSON.stringify(selectedSeats));
+        $('#reservation-confirmation').removeClass('d-none');
+    });
+
+    $("#reservation-confirmation").submit(function(event) {
+        event.preventDefault();
 
         currentReservation.seats = selectedSeats;
         $.ajax({
@@ -71,8 +78,8 @@ $(document).ready(function() {
             contentType: "application/json",
             data: JSON.stringify(currentReservation),
             success: function() {
-                console.log(JSON.stringify(currentReservation))
-                console.log("Reservation sent");
+                // console.log(JSON.stringify(currentReservation))
+                window.location.href = '/user/reservation-success';
             },
             error: function(xhr, status, error) {
                 console.log("Reservation failed: " + error);

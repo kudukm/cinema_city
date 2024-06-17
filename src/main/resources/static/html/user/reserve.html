@@ -8,12 +8,17 @@
 <div class="container">
   <h2 id="movie-title"></h2>
   <p class="text-center" id="screening-time"></p>
-  <form action="/api/user/reserve" method="post">
-    <input type="hidden" name="screeningId">
+  <form id="seats-reservation" action="/api/user/reserve" method="post">
+    <!--<input type="hidden" name="screeningId">
     <input type="hidden" name="movieTitle">
-    <input type="hidden" name="screeningTime">
+    <input type="hidden" name="screeningTime">-->
     <div id="seats-selector"></div>
     <button type="submit" class="btn btn-primary">Reserve</button>
+  </form>
+  <form id="reservation-confirmation" class="d-none" action="/api/user/confirmReservation" method="post">
+    <h2 class="text-center">Confirm reservation</h2>
+    <p class="text-center" id="selected-seats"></p>
+    <button type="submit" class="btn btn-primary">Pay</button>
   </form>
 </div>
 </body>
