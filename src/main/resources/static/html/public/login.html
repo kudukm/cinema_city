@@ -5,20 +5,27 @@
   <script src="/js/login.js"></script>
 </head>
 <body>
-<form class="form-signin" action="/api/public/login" method="post">
-  <h2 class="form-signin-heading">Log in</h2>
-  <p>
-    <label for="username" class="sr-only">Username:</label>
-    <input type="text" id="username" name="username" class="form-control" placeholder="username" required>
-  </p>
-  <p>
-    <label for="password" class="sr-only">Password:</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="password" required>
-  </p>
-  <p>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-  </p>
-</form>
-<div id="log-in-status"></div>
+<div id="non-logged" class="d-none">
+  <form class="form-signin" action="/api/public/login" method="post">
+    <h2 class="form-signin-heading">Log in</h2>
+    <p>
+      <label for="username" class="sr-only">Username:</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="username" required>
+    </p>
+    <p>
+      <label for="password" class="sr-only">Password:</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="password" required>
+    </p>
+    <p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+    </p>
+  </form>
+  <div id="log-in-status"></div>
+</div>
+<div id="logged" class="d-none">
+  <h2>Log in</h2>
+  <p class="text-center">You are already logged in as <span id="logged-user"></span></p>
+  <button class="btn btn-lg btn-primary btn-block" onclick="logout()">Log out</button>
+</div>
 </body>
 </html>

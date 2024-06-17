@@ -1,4 +1,31 @@
 $(document).ready(function() {
+    function checkIfLogged() {
+        if (!localStorage.getItem('jwtToken')) {
+            $('#non-logged').removeClass('d-none');
+        }
+        else {
+            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
+            $.ajax({
+                url: '/api/user/me',
+                headers: headers,
+                type: 'GET',
+                success: function(user) {
+                    if (user) {
+                        $("#logged-user").text(user.username);
+                    }
+                    else {
+                        $("#logged-user").text('[Unexpected response from server]');
+                    }
+                },
+                error: function() {
+                    $("#logged-user").text('[Server rejected to answer]');
+                }
+            });
+            $('#logged').removeClass('d-none');
+        }
+    }
+    checkIfLogged();
+
     $('.form-signin').on('submit', function(event) {
         event.preventDefault();
 
@@ -26,3 +53,8 @@ $(document).ready(function() {
         });
     });
 });
+
+function logout() {
+    localStorage.removeItem('jwtToken')
+    window.location.href = '/';
+}
