@@ -1,6 +1,5 @@
 package jwzp.cinema_city.service;
 
-
 import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.repository.ScreeningRepository;
@@ -43,7 +42,6 @@ public class ScreeningService {
             screening.setSeats(seats);
             screeningRepository.save(screening);
         } else {
-            // Handle case where screening is not found (optional)
             throw new IllegalArgumentException("Screening not found for ID: " + reservation.getScreening());
         }
     }

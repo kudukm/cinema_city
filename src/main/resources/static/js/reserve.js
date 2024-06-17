@@ -70,7 +70,7 @@ $(document).ready(function() {
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(currentReservation),
-            success: function(response) {
+            success: function() {
                 console.log(JSON.stringify(currentReservation))
                 console.log("Reservation sent");
             },
@@ -80,21 +80,3 @@ $(document).ready(function() {
         });
     });
 });
-
-/*
-<h2 th:text="${screening.movie.title}">Movie Title</h2>
-  <p th:text="${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}">Screening Time</p>
-  <form th:action="@{/reserve}" method="post">
-    <input type="hidden" name="screeningId" th:value="${screening.id}"/>
-    <input type="hidden" name="movieTitle" th:value="${screening.movie.title}"/>
-    <input type="hidden" name="screeningTime" th:value="${#temporals.format(screening.screeningTime, 'yyyy-MM-dd HH:mm')}"/>
-    <div th:each="seat, iterStat : ${screening.seats}">
-      <label>
-        <input type="checkbox" th:name="seats" th:value="${iterStat.index}" th:checked="${seat}" th:disabled="${seat}"/>
-        <span th:classappend="${seat} ? 'reserved' : 'available'" th:text="${iterStat.index + 1}"></span>
-      </label>
-      <br th:if="${iterStat.index % 5 == 4}" />
-    </div>
-    <button type="submit" class="btn btn-primary">Reserve</button>
-  </form>
- */

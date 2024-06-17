@@ -26,14 +26,14 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /*public User signup(RegisterUserDto input) {
-        User user = new User()
-                .setFullName(input.getFullName())
-                .setEmail(input.getEmail())
-                .setPassword(passwordEncoder.encode(input.getPassword()));
+    public UserEntity registerUser(UserEntity input) {
+        UserEntity user = new UserEntity();
+        user.setUsername(input.getUsername());
+        user.setEmail(input.getEmail());
+        user.setPassword(passwordEncoder.encode(input.getPassword()));
 
         return userRepository.save(user);
-    }*/
+    }
 
     public UserEntity authenticate(AuthRequest input) {
         authenticationManager.authenticate(

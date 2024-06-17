@@ -1,12 +1,10 @@
 package jwzp.cinema_city.service;
 
-
 import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.UserEntity;
 import jwzp.cinema_city.repository.ReservationRepository;
 import jwzp.cinema_city.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,10 +24,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private ReservationRepository reservationRepository;
-
-    public UserEntity registerUser(UserEntity user) {
-        return userRepository.save(user);
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

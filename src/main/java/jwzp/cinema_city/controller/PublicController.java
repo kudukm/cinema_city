@@ -6,7 +6,7 @@ import jwzp.cinema_city.models.Screening;
 import jwzp.cinema_city.models.UserEntity;
 import jwzp.cinema_city.service.MovieService;
 import jwzp.cinema_city.service.ScreeningService;
-import jwzp.cinema_city.service.UserService;
+import jwzp.cinema_city.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import java.util.List;
 public class PublicController {
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
     private MovieService movieService;
@@ -31,16 +31,16 @@ public class PublicController {
     /*@GetMapping("/")
     public ResponseEntity<String> home(){
         return new ResponseEntity<>("home", HttpStatus.OK);
-    }*/
+    }
 
     @GetMapping("/api/public/register")
     public ResponseEntity<UserEntity> showRegistrationForm() {
         return new ResponseEntity<>(new UserEntity(), HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping("/api/public/register")
     public ResponseEntity<String> registerUser(@RequestBody UserEntity user) {
-        userService.registerUser(user);
+        authService.registerUser(user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
