@@ -20,7 +20,7 @@
 <main class="container">
   <div class="row">
     <nav class="col-12 col-sm-3">
-      <ul class="nav flex-column">
+      <ul class="nav flex-column nav-pills">
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
@@ -37,10 +37,27 @@
           <a class="nav-link" href="/user/movies-list">Movies List</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/user/my-reservations">My reservations</a>
+          <a class="nav-link" href="/user/my-reservations">My Reservations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/panel">Admin Panel</a>
+          <!--<a class="nav-link" href="/admin/panel">Admin Panel</a>-->
+          <div class="nav-link">
+            <p>Admin Panel</p>
+            <p class="accordion-arrow">▼</p>
+          </div>
+          <div class="accordion d-none">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/addMovie">Add Movie</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/addScreening">Add Screening</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/importScreenings">Import Screenings</a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </nav>

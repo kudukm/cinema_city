@@ -28,6 +28,17 @@ $(document).ready(function() {
                 $('#content').html('<p>Another page loading error.</p>');
             }
         });
+
+        $('.nav-link').each(function() { //if link is a part of a menu activate it
+            if($(this).attr('href') === location.pathname) {
+                $(this).addClass('active');
+                let potentialAccordion = $(this).parent().parent().parent();
+                if(potentialAccordion.hasClass('accordion')) { //if the link is a part of an accordion open it
+                    potentialAccordion.removeClass('d-none');
+                    $('.accordion-arrow', potentialAccordion.parent()).text('▲');
+                }
+            }
+        })
     }
 
     function getLocation() {
@@ -43,6 +54,7 @@ $(document).ready(function() {
     // Load the beginning content
     callPage(getLocation());
 
+
     // Handle link clicks
     $('a').on('click', function(e) {
         e.preventDefault();
@@ -50,6 +62,10 @@ $(document).ready(function() {
         let pageAddress = pageRef !== '/' ? pageRef.substring(1) + '.html' : 'public/home.html';
         callPage('/html/' + pageAddress);
         history.pushState(null, '', pageRef);
+        if($(this).hasClass('nav-link')) {
+            $('a.active').removeClass('active');
+            $(this).addClass('active');
+        }
     });
 
     // Handle browser navigation (back/forward)
@@ -58,4 +74,16 @@ $(document).ready(function() {
         let page = (path === '' ? 'public/home' : path) + '.html';
         callPage('/html/' + page);
     };
+
+    $('div.nav-link').on('click', function() {
+        let accordion = $('.accordion', $(this).parent());
+        if(accordion.hasClass('d-none')) {
+            accordion.removeClass('d-none');
+            $('.accordion-arrow', $(this)).text('▲');
+        }
+        else {
+            accordion.addClass('d-none');
+            $('.accordion-arrow', $(this)).text('▼');
+        }
+    });
 });

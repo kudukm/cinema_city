@@ -69,6 +69,10 @@ button:hover {
     background-color: #0056b3;
 }
 
+.nav-link:hover {
+    background-color: lightgray;
+}
+
 .success-message {
     text-align: center;
     color: green;
@@ -79,4 +83,22 @@ button:hover {
 #seats-selector label {
     display: inline-block;
     width: 20%;
+}
+
+div.nav-link {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+div.nav-link p {
+    margin-bottom: 0;
+}
+
+.accordion-arrow {
+    margin-left: auto;
+}
+
+.accordion {
+    margin-left: 15px;
 }
