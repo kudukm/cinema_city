@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
 
 @RestController
 public class AdminController {
@@ -27,7 +26,7 @@ public class AdminController {
         return new ResponseEntity<>(new Movie(), HttpStatus.OK);
     }
 
-    @PostMapping("/admin/addMovie")
+    @PostMapping("/api/admin/addMovie")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
         try {
             movieService.registerMovie(movie);
@@ -39,11 +38,11 @@ public class AdminController {
 
     @GetMapping("/api/admin/addScreening")
     public ResponseEntity<List<Movie>> showAddScreeningForm() {
-        List<Movie> movies = movieService.findAllMovies();;
+        List<Movie> movies = movieService.findAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/addScreening")
+    @PostMapping("/api/admin/addScreening")
     public ResponseEntity<String> addScreening( @RequestParam String movieId,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime screeningTime) {
         try {

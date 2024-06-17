@@ -1,7 +1,12 @@
 $(document).ready(function() {
-    // Fetch movies from the backend and populate the select options
+    let headers;
+    if (localStorage.getItem('jwtToken')) {
+        headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
+    }
+
     $.ajax({
-        url: '/api/admin/addScreening', // Replace with your backend endpoint
+        url: '/api/admin/addScreening',
+        headers: headers,
         method: 'GET',
         success: function(movies) {
             var select = $('#movie');
@@ -14,28 +19,26 @@ $(document).ready(function() {
         }
     });
 
-    // Handle form submission via AJAX
     $('#addScreeningForm').on('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
-            // Collect form data
             var movieId = $('#movie').val();
-            var screeningTime = $('#screeningTime').val(); // Make sure this is formatted correctly
+            var screeningTime = $('#screeningTime').val();
 
-            // Send AJAX POST request
             $.ajax({
+                headers: headers,
                 type: 'POST',
-                url: '/admin/addScreening', // Replace with your backend endpoint
+                url: '/api/admin/addScreening',
                 data: {
                     movieId: movieId,
                     screeningTime: screeningTime
                 },
-                success: function(response) {
-                    $('#success-message').show(); // Show success message
-                    $('#addScreeningForm')[0].reset(); // Reset the form fields
-                    $('#movie').val(''); // Reset select field
+                success: function() {
+                    $('#success-message').show();
+                    $('#addScreeningForm')[0].reset();
+                    $('#movie').val('');
                 },
-                error: function(error) {
+                error: function() {
                     alert('Failed to add the screening. Please try again.');
                 }
             });

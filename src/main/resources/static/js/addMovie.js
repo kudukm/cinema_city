@@ -1,7 +1,11 @@
 document.getElementById('addMovieForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
-    // Serialize form data into JSON object
+    let token;
+    if (localStorage.getItem('jwtToken')) {
+        token = 'Bearer ' + localStorage.getItem('jwtToken');
+    }
+
     const formData = {
         title: document.getElementById('title').value,
         posterURL: document.getElementById('posterURL').value,
@@ -9,17 +13,18 @@ document.getElementById('addMovieForm').addEventListener('submit', function(even
         duration: document.getElementById('duration').value
     };
 
-    fetch('/admin/addMovie', {
+    fetch('/api/admin/addMovie', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token
         },
         body: JSON.stringify(formData),
     })
     .then(response => {
         if (response.ok) {
             document.getElementById('success-message').style.display = 'block';
-            this.reset(); // Reset the form fields
+            this.reset();
         } else {
             alert('Failed to add the movie. Please try again.');
         }
