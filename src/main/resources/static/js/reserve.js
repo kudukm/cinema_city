@@ -34,7 +34,7 @@ $(document).ready(function() {
                         });
                         let seatSpan = $('<span></span>', {
                             class: seat ? 'reserved' : 'available',
-                            text: index + 1
+                            text: index //+ 1
                         });
 
                         seatLabel.append(seatInput).append(seatSpan);
@@ -79,7 +79,7 @@ $(document).ready(function() {
             data: JSON.stringify(currentReservation),
             success: function() {
                 // console.log(JSON.stringify(currentReservation))
-                window.location.href = '/user/reservation-success';
+                window.location.href = '/user/my-reservations#reservation-success';
             },
             error: function(xhr, status, error) {
                 console.log("Reservation failed: " + error);

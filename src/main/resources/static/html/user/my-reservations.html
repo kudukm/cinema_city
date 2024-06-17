@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/js/my-reservations.js"></script>
+    <title>My reservations</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">My reservations</h2>
+    <div id="no-reservations-message" class="d-none">
+        <p class="text-center">You haven't reserved any ticket yet.</p>
+    </div>
+    <div id="reservation-success" class="d-none">
+        <p class="text-center">Your reservation was successful.</p>
+    </div>
+    <div id="reservations-container" class="d-none">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Screening Time</th>
+                    <th>Duration</th>
+                    <th>Seats</th>
+                </tr>
+            </thead>
+            <tbody id="reservations-body"></tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

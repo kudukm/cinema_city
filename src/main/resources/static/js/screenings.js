@@ -16,10 +16,10 @@ $(document).ready(function() {
                     screenings.forEach(function(screening) {
                         $("#screeningsBody").append(
                             `<tr>
-                    <td>${screening.movie.title}</td>
-                    <td>${screening.screeningTime}</td>
-                    <td><a href="/user/reserve#${screening.id}" class="btn btn-primary">Reserve</a></td>
-                  </tr>`
+                                <td>${screening.movie.title}</td>
+                                <td>${screening.screeningTime}</td>
+                                <td><a href="/user/reserve#${screening.id}" class="btn btn-primary">Reserve</a></td>
+                            </tr>`
                         );
                     });
                 }

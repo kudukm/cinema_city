@@ -51,6 +51,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public List<Reservation> getMyReservations(UserEntity user) {
+        return reservationRepository.findByUser(user);
+    }
+
     public List<Reservation> getPastReservations(UserEntity user, LocalDateTime currentTime) {
         List<Reservation> reservations = reservationRepository.findByUser(user);
         return reservations.stream()

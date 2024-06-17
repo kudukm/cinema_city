@@ -38,6 +38,14 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
+    @GetMapping("/api/user/myReservations")
+    public ResponseEntity<List<Reservation>> myReservations() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        UserEntity user = userService.findByUsername(username);
+        List<Reservation> reservations = userService.getMyReservations(user);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
 
     @GetMapping("/api/user/userPastReservations")
     public ResponseEntity<List<Reservation>> userPastReservations() {
