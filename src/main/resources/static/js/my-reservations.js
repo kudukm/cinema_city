@@ -11,7 +11,7 @@ $(document).ready(function() {
             headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
         }
         $.ajax({
-            url: "/api/user/myReservations",
+            url: "/api/user/my-reservations",
             headers: headers,
             type: "GET",
             success: function (reservations) {

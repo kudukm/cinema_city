@@ -8,6 +8,7 @@ import jwzp.cinema_city.service.MovieService;
 import jwzp.cinema_city.service.ScreeningService;
 import jwzp.cinema_city.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,13 @@ public class PublicController {
     public ResponseEntity<List<Movie>> listMovies() {
         List<Movie> movies = movieService.findAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/user/movies-list-page")
+    public ResponseEntity<List<Movie>> moviesPage(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "9") int size) { //9 = 3 * 3 where 3 is a number of columns
+        Page<Movie> currentPage = movieService.getNextPage(page, size);
+        return new ResponseEntity<>(currentPage.getContent(), HttpStatus.OK);
     }
 
     //removed return of date attribute which should not be necessary

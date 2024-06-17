@@ -37,38 +37,12 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    @GetMapping("/api/user/myReservations")
+    @GetMapping("/api/user/my-reservations")
     public ResponseEntity<List<Reservation>> myReservations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
         UserEntity user = userService.findByUsername(username);
         List<Reservation> reservations = userService.getMyReservations(user);
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
-    }
-
-    @GetMapping("/api/user/userPastReservations")
-    public ResponseEntity<List<Reservation>> userPastReservations() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-
-        UserEntity user = userService.findByUsername(username);
-
-        LocalDateTime time = LocalDateTime.now();
-
-        List<Reservation> reservations = userService.getPastReservations(user,time);
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
-    }
-
-    @GetMapping("/api/user/userFutureReservations")
-    public ResponseEntity<List<Reservation>> userFutureReservations() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-
-        UserEntity user = userService.findByUsername(username);
-
-        LocalDateTime time = LocalDateTime.now();
-
-        List<Reservation> reservations = userService.getFutureReservations(user,time);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
