@@ -1,15 +1,10 @@
 $(document).ready(function() {
     let currentReservation;
-    let headers;
     let selectedSeats = [];
     function fetchSeats() {
         id = location.hash.substring(1);
-        if (localStorage.getItem('jwtToken')) {
-            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-        }
         $.ajax({
             url: "/api/user/reserve",
-            headers: headers,
             type: "GET",
             data: {id: id},
             success: function(reservation) {
@@ -73,7 +68,6 @@ $(document).ready(function() {
         currentReservation.seats = selectedSeats;
         $.ajax({
             url: "/api/user/confirmReservation",
-            headers: headers,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(currentReservation),

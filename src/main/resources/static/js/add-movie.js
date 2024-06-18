@@ -1,11 +1,6 @@
 document.getElementById('addMovieForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    let token;
-    if (localStorage.getItem('jwtToken')) {
-        token = 'Bearer ' + localStorage.getItem('jwtToken');
-    }
-
     const formData = {
         title: document.getElementById('title').value,
         posterURL: document.getElementById('posterURL').value,
@@ -16,8 +11,7 @@ document.getElementById('addMovieForm').addEventListener('submit', function(even
     fetch('/api/admin/add-movie', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData),
     })

@@ -1,12 +1,6 @@
 $(document).ready(function() {
-    let headers;
-    if (localStorage.getItem('jwtToken')) {
-        headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-    }
-
     $.ajax({
         url: '/api/admin/add-screening',
-        headers: headers,
         method: 'GET',
         success: function(movies) {
             var select = $('#movie');
@@ -26,7 +20,6 @@ $(document).ready(function() {
             var screeningTime = $('#screeningTime').val();
 
             $.ajax({
-                headers: headers,
                 type: 'POST',
                 url: '/api/admin/add-screening',
                 data: {

@@ -10,7 +10,7 @@ $(document).ready(function() {
             url: '/api/public/register',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ id: null, username: username, password: password, email: email, role: 'USER'}),
+            data: JSON.stringify({ id: null, username: username, password: password, email: email, role: 'null'}),
             success: function(response) {
                 if (response) {
                     $("#register-status").text('User registered successfully');

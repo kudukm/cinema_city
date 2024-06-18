@@ -1,12 +1,7 @@
 $(document).ready(function() {
     function callPage(url) {
-        let headers;
-        if (localStorage.getItem('jwtToken')) {
-            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-        }
         $.ajax({
             url: url,
-            headers: headers,
             dataType: 'html',
             success: function(data) {
                 let content = $('#content')
@@ -53,7 +48,6 @@ $(document).ready(function() {
 
     // Load the beginning content
     callPage(getLocation());
-
 
     // Handle link clicks
     $('a').on('click', function(e) {

@@ -1,28 +1,22 @@
 $(document).ready(function() {
     function checkIfLogged() {
-        if (!localStorage.getItem('jwtToken')) {
-            $('#non-logged').removeClass('d-none');
-        }
-        else {
-            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-            $.ajax({
-                url: '/api/user/me',
-                headers: headers,
-                type: 'GET',
-                success: function(user) {
-                    if (user) {
-                        $("#logged-user").text(user.username);
-                    }
-                    else {
-                        $("#logged-user").text('[Unexpected response from server]');
-                    }
-                },
-                error: function() {
-                    $("#logged-user").text('[Server rejected to answer]');
+        $.ajax({
+            url: '/api/user/me',
+            type: 'GET',
+            success: function(user) {
+                if(user) {
+                    $('#logged-user').text(user.username);
+                    $('#logged').removeClass('d-none');
                 }
-            });
-            $('#logged').removeClass('d-none');
-        }
+                else {
+                    $('#non-logged').removeClass('d-none');
+                }
+            },
+            error: function() {
+                $("#logged-user").text('[Server rejected to answer]');
+                $('#logged').removeClass('d-none');
+            }
+        });
     }
     checkIfLogged();
 
@@ -39,22 +33,29 @@ $(document).ready(function() {
             data: JSON.stringify({ username: username, password: password }),
             success: function(response) {
                 if (response) {
-                    $("#log-in-status").text('Log in successful');
-                    localStorage.setItem('jwtToken', response);
+                    $("#log-in-status").text('Log in successful').addClass('success-message').show();
                     window.location.href = '/';
                 }
                 else {
-                    $("#log-in-status").text('Unexpected response from server');
+                    $("#log-in-status").text('Unexpected response from server').addClass('failure-message').show();
                 }
             },
             error: function() {
-                $("#log-in-status").text('Invalid username or password');
+                $("#log-in-status").text('Invalid username or password').addClass('failure-message').show();
             }
         });
     });
 });
 
 function logout() {
-    localStorage.removeItem('jwtToken')
-    window.location.href = '/';
+    $.ajax({
+        url: '/api/public/logout',
+        type: 'GET',
+        success: function() {
+            window.location.href = '/';
+        },
+        error: function() {
+            alert('Logout unsuccessful.');
+        }
+    });
 }

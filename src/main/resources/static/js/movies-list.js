@@ -3,13 +3,8 @@ $(document).ready(function() {
     function fetchMoviesPage() {
         // console.log(pagesLoaded);
         if(pagesLoaded >= 0) {
-            let headers;
-            if (localStorage.getItem('jwtToken')) {
-                headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-            }
             $.ajax({
                 url: "/api/user/movies-list-page",
-                headers: headers,
                 type: "GET",
                 data: {page: pagesLoaded},
                 success: function (movies) {

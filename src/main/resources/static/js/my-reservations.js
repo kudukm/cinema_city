@@ -6,13 +6,8 @@ $(document).ready(function() {
     }
 
     function fetchReservations() {
-        let headers;
-        if (localStorage.getItem('jwtToken')) {
-            headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-        }
         $.ajax({
             url: "/api/user/my-reservations",
-            headers: headers,
             type: "GET",
             success: function (reservations) {
                 if (reservations.length === 0) {

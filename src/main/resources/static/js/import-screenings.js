@@ -1,17 +1,8 @@
 let allMovies = [];
-let headers;
-if (localStorage.getItem('jwtToken')) {
-    headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-}
 
 $(document).ready(function() {
-    let headers;
-    if (localStorage.getItem('jwtToken')) {
-        headers = {Authorization: 'Bearer ' + localStorage.getItem('jwtToken')};
-    }
     $.ajax({
         url: '/api/admin/add-screening',
-        headers: headers,
         method: 'GET',
         success: function(movies) {
             allMovies = movies;
@@ -118,7 +109,6 @@ function addScreenings() {
     let wereErrors = false;
     chosenScreenings.forEach(function(screening) {
         $.ajax({
-            headers: headers,
             type: 'POST',
             url: '/api/admin/add-screening',
             data: screening,
