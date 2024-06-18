@@ -1,7 +1,7 @@
 $(document).ready(function() {
     let pagesLoaded = 0;
     function fetchMoviesPage() {
-        console.log(pagesLoaded);
+        // console.log(pagesLoaded);
         if(pagesLoaded >= 0) {
             let headers;
             if (localStorage.getItem('jwtToken')) {

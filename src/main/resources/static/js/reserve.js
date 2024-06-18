@@ -82,7 +82,7 @@ $(document).ready(function() {
                 window.location.href = '/user/my-reservations#reservation-success';
             },
             error: function(xhr, status, error) {
-                console.log("Reservation failed: " + error);
+                console.error("Reservation failed: " + error);
             }
         });
     });

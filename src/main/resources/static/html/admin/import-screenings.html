@@ -2,8 +2,48 @@
 <html lang="en">
 <head>
     <title>Add multiple screenings</title>
+    <script src="/js/import-screenings.js"></script>
 </head>
 <body>
-    <h2 class="bolder">Import multiple screenings from JSON file</h2>
+    <h2 class="bolder text-center">Import multiple screenings from JSON file</h2>
+    <p class="text-center">
+        <input type="file" name="jsonFile" id="jsonFile">
+    </p>
+    <div id="noScreeningsMessage" class="d-none">
+        <p class="text-center">No screenings were uploaded.</p>
+    </div>
+    <div id="screeningsTable" class="d-none">
+        <form>
+            <h3>Display screenings from a date range</h3>
+            <div class="form-group">
+                <label for="date-from">From:</label>
+                <input type="date" id="date-from" name="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="date-to">To:</label>
+                <input type="date" id="date-to" name="date" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+        <table class="table" id="sortable-table">
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th onclick="sortTable(1)">Movie ID</th>
+                <th onclick="sortTable(2)">Movie Name</th>
+                <th onclick="sortTable(3)">Screening Time</th>
+            </tr>
+            </thead>
+            <tbody id="screeningsBody">
+            </tbody>
+        </table>
+        <button class="btn btn-lg btn-primary btn-block" onclick="addScreenings()">Add selected screenings</button>
+        <div class="success-message">
+            <p>Successfully added all screenings!</p>
+        </div>
+        <div class="failure-message">
+            <p>Some screenings weren't added. Check logs.</p>
+        </div>
+    </div>
 </body>
 </html>

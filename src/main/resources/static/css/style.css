@@ -80,6 +80,13 @@ button:hover {
     display: none;
 }
 
+.failure-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
 #seats-selector label {
     display: inline-block;
     width: 20%;
@@ -101,4 +108,8 @@ div.nav-link p {
 
 .accordion {
     margin-left: 15px;
+}
+
+#screeningsTable form {
+    margin-bottom: 20px;
 }
