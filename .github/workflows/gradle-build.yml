@@ -25,11 +25,3 @@ jobs:
 
       - name: Run tests with Gradle
         run: ./gradlew test
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()
-        with:
-          name: JUnit results
-          path: build/test-results/test/TEST-*.xml
-          reporter: java-junit
