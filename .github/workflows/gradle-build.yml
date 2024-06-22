@@ -24,12 +24,12 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test > test-results.txt || echo "Tests failed"
+        run: ./gradlew test
 
-      - name: Parse test results
-        if: ${{ failure() }}
-        run: |
-          echo "Tests failed"
-          cat test-results.txt
-          else
-          echo "All tests passed"
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: JUnit results
+          path: build/test-results/test/TEST-*.xml
+          reporter: java-junit
