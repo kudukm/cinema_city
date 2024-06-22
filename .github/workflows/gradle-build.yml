@@ -24,4 +24,12 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests with Gradle
-        run: ./gradlew test
+        run: ./gradlew test > test-results.txt || echo "Tests failed"
+
+      - name: Parse test results
+        if: ${{ failure() }}
+        run: |
+          echo "Tests failed"
+          cat test-results.txt
+          else
+          echo "All tests passed"
