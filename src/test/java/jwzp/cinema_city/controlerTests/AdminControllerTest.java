@@ -108,4 +108,9 @@ public class AdminControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("Failed to add the screening. Please try again.", response.getBody());
     }
+
+    @Test
+    void failTest(){
+        assertEquals(1,2);
+    }
 }
