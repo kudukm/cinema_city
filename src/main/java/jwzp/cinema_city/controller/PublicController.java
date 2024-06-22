@@ -29,15 +29,7 @@ public class PublicController {
     private ScreeningService screeningService;
 
 
-    /*@GetMapping("/")
-    public ResponseEntity<String> home(){
-        return new ResponseEntity<>("home", HttpStatus.OK);
-    }
 
-    @GetMapping("/api/public/register")
-    public ResponseEntity<UserEntity> showRegistrationForm() {
-        return new ResponseEntity<>(new UserEntity(), HttpStatus.OK);
-    }*/
 
     @PostMapping("/api/public/register")
     public ResponseEntity<String> registerUser(@RequestBody UserEntity user) {
@@ -45,10 +37,7 @@ public class PublicController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
-    /*@GetMapping("/api/login")
-    public ResponseEntity<String> loginPage() {
-        return new ResponseEntity<>("login", HttpStatus.OK);
-    }*/
+
 
     @GetMapping("/api/user/movies-list")
     public ResponseEntity<List<Movie>> listMovies() {
