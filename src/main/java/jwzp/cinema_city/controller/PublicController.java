@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import jwzp.cinema_city.config.ClockConfig;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +23,8 @@ import java.util.List;
 public class PublicController {
     private static final Logger logger = LoggerFactory.getLogger(PublicController.class);
 
-    private Clock clock;
+    @Autowired
+    private Clock clock = Clock.systemDefaultZone();
 
     @Autowired
     private AuthService authService;
