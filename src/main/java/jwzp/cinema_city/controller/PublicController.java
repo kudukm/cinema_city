@@ -15,12 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 public class PublicController {
     private static final Logger logger = LoggerFactory.getLogger(PublicController.class);
+
+    private Clock clock;
 
     @Autowired
     private AuthService authService;
@@ -75,7 +78,7 @@ public class PublicController {
     @GetMapping("/api/public/screenings")
     public ResponseEntity<List<Screening>> showScreeningsByDate(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) {
-            date = LocalDate.now();
+            date = LocalDate.now(clock);
         }
         logger.info("Received request to list screenings for date: {}", date);
         try {
