@@ -113,6 +113,8 @@ public class UserControllerTest {
     @Test
     void testReserveSeats() {
         Reservation reservation = new Reservation();
+        reservation.setScreening(new Screening());
+        reservation.getScreening().setId("testID");
 
         ResponseEntity<Reservation> response = userController.reserveSeats(reservation);
 
@@ -123,6 +125,10 @@ public class UserControllerTest {
     @Test
     void testConfirmReservation() {
         Reservation reservation = new Reservation();
+        reservation.setUser(new UserEntity());
+        reservation.getUser().setUsername("TestUser");
+        reservation.setScreening(new Screening());
+        reservation.getScreening().setId("testID");
 
         ResponseEntity<String> response = userController.confirmReservation(reservation);
 
