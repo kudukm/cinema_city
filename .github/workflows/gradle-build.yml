@@ -32,4 +32,4 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         run: snyk test
         env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
