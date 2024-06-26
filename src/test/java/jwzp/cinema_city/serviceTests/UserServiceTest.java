@@ -1,5 +1,6 @@
 package jwzp.cinema_city.serviceTests;
 
+import jwzp.cinema_city.models.Reservation;
 import jwzp.cinema_city.models.UserEntity;
 import jwzp.cinema_city.repository.ReservationRepository;
 import jwzp.cinema_city.repository.UserRepository;
@@ -15,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.Clock;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,5 +110,37 @@ public class UserServiceTest {
         assertNull(userDetails);
     }
 
-    //TODO: add tests for methods that will use clock
+    @Test
+    public void testGetMyReservations_UserHasReservations() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("testUser");
+
+        Reservation reservation = new Reservation();
+        reservation.setId("resId");
+        reservation.setUser(userEntity);
+
+        List<Reservation> reservations = Collections.singletonList(reservation);
+        when(reservationRepository.findByUser(userEntity)).thenReturn(reservations);
+
+        List<Reservation> result = userService.getMyReservations(userEntity);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("resId", result.get(0).getId());
+    }
+
+    @Test
+    public void testGetMyReservations_UserHasNoReservations() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("testUser");
+
+        when(reservationRepository.findByUser(userEntity)).thenReturn(Collections.emptyList());
+
+        List<Reservation> result = userService.getMyReservations(userEntity);
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
+
+
 }

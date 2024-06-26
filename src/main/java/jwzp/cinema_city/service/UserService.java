@@ -55,19 +55,6 @@ public class UserService implements UserDetailsService {
         return reservationRepository.findByUser(user);
     }
 
-    public List<Reservation> getPastReservations(UserEntity user, LocalDateTime currentTime) {
-        List<Reservation> reservations = reservationRepository.findByUser(user);
-        return reservations.stream()
-                .filter(reservation -> reservation.getScreening().getScreeningTime().isBefore(currentTime))
-                .collect(Collectors.toList());
-    }
-
-    public List<Reservation> getFutureReservations(UserEntity user, LocalDateTime currentTime) {
-        List<Reservation> reservations = reservationRepository.findByUser(user);
-        return reservations.stream()
-                .filter(reservation -> reservation.getScreening().getScreeningTime().isAfter(currentTime))
-                .collect(Collectors.toList());
-    }
 
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
